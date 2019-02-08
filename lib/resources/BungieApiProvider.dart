@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:flutter_playground/models/character_model.dart';
 import 'package:flutter_playground/utils/keys.dart';
 import 'package:http/http.dart' show Client;
 import 'dart:convert';
@@ -25,4 +26,23 @@ class BungieApiProvider {
       throw Exception('Failed to get player');
     }
   }
+  
+  Future<CharacterModel> fetchCharacters(String mType, String mId) async {
+    print("fetchCharacters called");
+    
+    final response = await client
+        .get("https://www.bungie.net/Platform/Destiny2/" + mType +
+              "/Profile/" + mId + "/?components=100,200",
+          headers: _headers
+        );
+
+    print(response.body.toString());
+    if (response.statusCode == 200) {
+      return CharacterModel.fromJson(json.decode(response.body));
+    } else {
+      throw Exception('Failed to get characters');
+    }
+  }
+
+
 }

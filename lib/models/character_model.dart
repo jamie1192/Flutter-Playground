@@ -1,5 +1,16 @@
 class CharacterModel {
 
+  int _errorCode;
+  _Profile _profile;
+
+  CharacterModel.fromJson(Map<String, dynamic> parsedJson) {
+    print(parsedJson['Response']);
+
+    _profile = parsedJson['Response'];
+    _errorCode = parsedJson['ErrorCode'];
+  }
+
+  int get errorCode => _errorCode;
 
 
 }
