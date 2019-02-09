@@ -15,44 +15,7 @@ class App extends StatelessWidget {
         'playerSearch': (context) => PlayerSearch(),
         'characterSearch': (context) => CharacterSearch()
       },
-      home: Scaffold(
-//        body: PlayerSearch(),
-        appBar: AppBar(
-          title: Text('Flutter Playground'),
-        ),
-        drawer: Drawer(
-          child: ListView(
-            //important, must apparently remove any padding
-            padding: EdgeInsets.zero,
-            children: <Widget>[
-              DrawerHeader(
-                child: Text('Flutter Playground'),
-                decoration: BoxDecoration(
-                  color: AppTheme().primaryColor
-                )
-              ),
-              ListTile(
-                title: Text('Destiny Player Search'),
-                leading: Icon(
-                    Icons.search
-                ),
-                onTap: () {
-                  Navigator.pushNamed(context, 'playerSearch');
-//                  Navigator.pop(context);
-                },
-              ),
-              ListTile(
-                title: Text('Destiny Character List'),
-                leading: Icon(Icons.people),
-                onTap: () {
-                  Navigator.pushNamed(context, 'characterSearch');
-//                  Navigator.pop(context);
-                },
-              )
-            ],
-          ),
-        ),
-      ),
+      home: HomeScreen(),
     );
   }
 }
