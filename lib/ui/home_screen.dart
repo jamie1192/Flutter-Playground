@@ -54,6 +54,28 @@ class HomeScreen extends StatelessWidget {
                 )
               ],
             ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text('Activities'),
+            ),
+            ExpansionTile(
+              leading: Icon(
+                Icons.touch_app
+              ),
+              title: Text('UI'),
+              children: <Widget>[
+                ListTile(
+                  title: Text('Wheel'),
+                  leading: Icon(
+                    Icons.av_timer
+                  ),
+                  onTap: () {
+                    Navigator.of(context).pop();
+                    Navigator.pushNamed(context, 'playerSearch');
+                  }
+                )
+              ],
+            )
           ],
         ),
       ),

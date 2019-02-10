@@ -47,7 +47,7 @@ class BungieApiProvider {
         return temp;
       } else {
         Fimber.e(response.body.toString());
-        throw Exception('Failed to get player');
+        throw Exception('Failed to find player');
       }
     } catch(error) {
 
