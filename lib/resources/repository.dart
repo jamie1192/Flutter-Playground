@@ -7,4 +7,6 @@ class Repository {
 
   Future<PlayerModel> fetchPlayer() => bungieApiProvider.fetchPlayer();
 
+  Future<PlayerModel> searchPlayerByName(String player) => bungieApiProvider.searchPlayerByName(player);
+
 }

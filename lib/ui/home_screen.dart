@@ -21,31 +21,42 @@ class HomeScreen extends StatelessWidget {
             DrawerHeader(
               child: Text('Flutter Playground'),
               decoration: BoxDecoration(
-                  color: AppTheme().primaryColor
+                color: AppTheme().primaryColor
               )
             ),
-            ListTile(
-              title: Text('Destiny Player Search'),
-              leading: Icon(
-                Icons.search
-              ),
-              onTap: () {
-                Navigator.of(context).pop();
-                Navigator.pushNamed(context, 'playerSearch');
-              },
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text('Networking'),
             ),
-            ListTile(
-              title: Text('Destiny Character List'),
-              leading: Icon(Icons.people),
-              onTap: () {
-                Navigator.of(context).pop();
-                Navigator.pushNamed(context, 'characterSearch');
-              },
-            )
+            ExpansionTile(
+              leading: Icon(
+                Icons.gamepad
+              ),
+              title: Text('Destiny API'),
+              children: <Widget>[
+                ListTile(
+                  title: Text('Destiny Player Search'),
+                  leading: Icon(
+                    Icons.search
+                  ),
+                  onTap: () {
+                    Navigator.of(context).pop();
+                    Navigator.pushNamed(context, 'playerSearch');
+                  },
+                ),
+                ListTile(
+                  title: Text('Destiny Character List'),
+                  leading: Icon(Icons.people),
+                  onTap: () {
+                    Navigator.of(context).pop();
+                    Navigator.pushNamed(context, 'characterSearch');
+                  },
+                )
+              ],
+            ),
           ],
         ),
       ),
-//      ),
     );
   }
 

@@ -15,7 +15,7 @@ class App extends StatelessWidget {
         'playerSearch': (context) => PlayerSearch(),
         'characterSearch': (context) => CharacterSearch()
       },
-      home: HomeScreen(),
+      home: HomeScreen(title: 'Flutter Playground'),
     );
   }
 }

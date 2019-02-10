@@ -1,10 +1,12 @@
 class PlayerModel {
   int _errorCode;
-
+  String _error;
   List<_Membership> _memberships = [];
 
+
+  PlayerModel(this._error, this._memberships);
+
   PlayerModel.fromJson(Map<String, dynamic> parsedJson) {
-    print(parsedJson['Response']);
 
     _errorCode = parsedJson['ErrorCode'];
 
@@ -17,7 +19,13 @@ class PlayerModel {
     _memberships = temp;
   }
 
+  PlayerModel.withError(String errorValue) :
+    _memberships = List(),
+    _error = errorValue;
+
+
   int get errorCode => _errorCode;
+  String get error => _error;
   List<_Membership> get memberships => _memberships;
 
 }
