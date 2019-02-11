@@ -71,7 +71,7 @@ class HomeScreen extends StatelessWidget {
                   ),
                   onTap: () {
                     Navigator.of(context).pop();
-                    Navigator.pushNamed(context, 'playerSearch');
+                    Navigator.pushNamed(context, 'spinnerWheel');
                   }
                 )
               ],

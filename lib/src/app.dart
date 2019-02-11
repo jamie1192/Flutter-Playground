@@ -3,6 +3,7 @@ import 'package:flutter_playground/ui/app_theme.dart';
 import 'package:flutter_playground/ui/character_search.dart';
 import 'package:flutter_playground/ui/home_screen.dart';
 import 'package:flutter_playground/ui/player_search.dart';
+import 'package:flutter_playground/ui/spinner_wheel.dart';
 
 class App extends StatelessWidget {
   @override
@@ -13,7 +14,8 @@ class App extends StatelessWidget {
       routes: {
 //        '/' : (context) => HomeScreen(),
         'playerSearch': (context) => PlayerSearch(),
-        'characterSearch': (context) => CharacterSearch()
+        'characterSearch': (context) => CharacterSearch(),
+        'spinnerWheel': (context) => SpinnerWheel()
       },
       home: HomeScreen(title: 'Flutter Playground'),
     );
