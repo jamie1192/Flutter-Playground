@@ -73,6 +73,16 @@ class HomeScreen extends StatelessWidget {
                     Navigator.of(context).pop();
                     Navigator.pushNamed(context, 'spinnerWheel');
                   }
+                ),
+                ListTile(
+                    title: Text('Pinching'),
+                    leading: Icon(
+                        Icons.aspect_ratio
+                    ),
+                    onTap: () {
+                      Navigator.of(context).pop();
+                      Navigator.pushNamed(context, 'pinchGesture');
+                    }
                 )
               ],
             )

@@ -12,7 +12,4 @@ class MainActivity: FlutterActivity() {
     GeneratedPluginRegistrant.registerWith(this)
   }
 
-  fun roate() {
-    RotateAnimation
-  }
 }
