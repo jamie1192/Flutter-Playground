@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_playground/ui/app_theme.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 class HomeScreen extends StatelessWidget {
 
@@ -37,7 +38,7 @@ class HomeScreen extends StatelessWidget {
                 ListTile(
                   title: Text('Destiny Player Search'),
                   leading: Icon(
-                    Icons.search
+                      MdiIcons.accountSearch
                   ),
                   onTap: () {
                     Navigator.of(context).pop();
@@ -46,7 +47,7 @@ class HomeScreen extends StatelessWidget {
                 ),
                 ListTile(
                   title: Text('Destiny Character List'),
-                  leading: Icon(Icons.people),
+                  leading: Icon(MdiIcons.accountGroup),
                   onTap: () {
                     Navigator.of(context).pop();
                     Navigator.pushNamed(context, 'characterSearch');
@@ -67,7 +68,7 @@ class HomeScreen extends StatelessWidget {
                 ListTile(
                   title: Text('Wheel'),
                   leading: Icon(
-                    Icons.av_timer
+                    MdiIcons.loop
                   ),
                   onTap: () {
                     Navigator.of(context).pop();
@@ -77,7 +78,7 @@ class HomeScreen extends StatelessWidget {
                 ListTile(
                     title: Text('Pinching'),
                     leading: Icon(
-                        Icons.aspect_ratio
+                        MdiIcons.gesturePinch
                     ),
                     onTap: () {
                       Navigator.of(context).pop();
@@ -85,6 +86,16 @@ class HomeScreen extends StatelessWidget {
                     }
                 )
               ],
+            ),
+            ListTile(
+                title: Text('Database'),
+                leading: Icon(
+                    MdiIcons.database
+                ),
+                onTap: () {
+                  Navigator.of(context).pop();
+                  Navigator.pushNamed(context, 'crudScreen');
+                }
             )
           ],
         ),

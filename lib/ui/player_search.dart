@@ -1,6 +1,7 @@
 import 'package:fimber/fimber.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_playground/blocs/player_bloc.dart';
+import 'package:flutter_playground/models/character_model.dart';
 import 'package:flutter_playground/models/player_model.dart';
 
 class PlayerSearch extends StatelessWidget {
@@ -23,14 +24,17 @@ class PlayerSearch extends StatelessWidget {
               PlayerSearchForm(),
               StreamBuilder(
                   stream: bloc.getSearchResult,
-                  builder: (context, AsyncSnapshot<PlayerModel> snapshot) {
+                  builder: (context, AsyncSnapshot<List<ProfileCharacterModel>> snapshot) {
                     if(snapshot.hasData) {
-                      if(snapshot.data.error != null) {
-                        return buildError(snapshot.data.error);
+                      for(ProfileCharacterModel profile in snapshot.data) {
+                        if(profile.error != null) {
+                          return buildError(profile.error);
+                        }
+                        else {
+                          return buildList(snapshot);
+                        }
                       }
-                      else {
-                        return buildList(snapshot);
-                      }
+
                     }
                     else if(snapshot.hasError) {
                       return buildError(snapshot.error.toString());
@@ -144,15 +148,15 @@ Widget buildError(String errorMessage) {
   );
 }
 
-Widget buildList(AsyncSnapshot<PlayerModel> snapshot) {
+Widget buildList(AsyncSnapshot<List<ProfileCharacterModel>> snapshot) {
 
   return ListView.builder(
     shrinkWrap: true,
-    itemCount: snapshot.data.memberships.length,
+    itemCount: snapshot.data.length,
     padding: EdgeInsets.all(10.0),
     itemBuilder: (BuildContext context, int index) {
       String _icon;
-      switch(snapshot.data.memberships[index].mType) {
+      switch(snapshot.data[index].profile.data.userInfo.membershipType) {
         case 1:
           _icon = "assets/images/icon_xbl.png";
           break;
@@ -175,11 +179,11 @@ Widget buildList(AsyncSnapshot<PlayerModel> snapshot) {
             children: <Widget>[
               ListTile(
                 title: Text(
-                  snapshot.data.memberships[index].displayName,
+                  snapshot.data[index].profile.data.userInfo.displayName,
                   style: TextStyle(fontSize: 18.0),
                 ),
                 subtitle: Text(
-                  'mId: ${snapshot.data.memberships[index].mId}',
+                  'mId: ${snapshot.data[index].profile.data.userInfo.membershipId}',
                   style: TextStyle(
                       fontSize: 14.0,
                       fontStyle: FontStyle.italic,

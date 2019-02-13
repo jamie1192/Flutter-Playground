@@ -29,54 +29,79 @@ class BungieApiProvider {
     }
   }
 
-  Future<PlayerModel> searchPlayerByName(String player) async {
+  Future<List<ProfileCharacterModel>> searchPlayerByName(String player) async {
     String uri = Uri.encodeComponent(player);
     Fimber.i('Searching for player: $uri');
 
+    List<ProfileCharacterModel> _profileList;
+    
     try {
       final response = await client
           .get("https://www.bungie.net/Platform/Destiny2/SearchDestinyPlayer/-1/" + uri + "/",
           headers: _headers
-      );
-      Fimber.i(response.body.toString());
-      if (response.statusCode == 200) { //success
-        PlayerModel temp = PlayerModel.fromJson(json.decode(response.body));
-        if(temp.memberships.isEmpty) {
-          return PlayerModel.withError('No Players Found!');
-        } else
-        return temp;
-      } else {
-        Fimber.e(response.body.toString());
-        throw Exception('Failed to find player');
-      }
+      ).then((onValue) async {
+
+        if (onValue.statusCode == 200) { //success
+          PlayerModel temp = PlayerModel.fromJson(json.decode(onValue.body));
+
+          if(temp.memberships.isEmpty) {
+            return PlayerModel.withError('No Players Found!');
+          } else{
+            final getCharacters = await client.get("https://www.bungie.net/Platform/Destiny2/"
+              "${temp.memberships[0].mType}/Profile/${temp.memberships[0].mId}/?components=100,200",
+                headers: _headers);
+
+            //TODO: handle Bungie errorCode?
+            if(getCharacters.statusCode == 200) {
+              Fimber.i('getCharacters');
+             _profileList.add(ProfileCharacterModel.fromJson(json.decode(getCharacters.body)));
+            }
+          }
+        }
+      });
+
+
+//      Fimber.i(response.body.toString());
+//      if (response.statusCode == 200) { //success
+//        PlayerModel temp = PlayerModel.fromJson(json.decode(response.body));
+//        if(temp.memberships.isEmpty) {
+//          return PlayerModel.withError('No Players Found!');
+//        } else
+//        return temp;
+//      } else {
+//        Fimber.e(response.body.toString());
+//        throw Exception('Failed to find player');
+//      }
     } catch(error) {
 
       Fimber.e(error.toString());
 
       if(error is SocketException) {
-        return PlayerModel.withError('No Network Connection!');
+        _profileList.add(ProfileCharacterModel.withError('No Network Connection!'));
+        return _profileList;
       }
-      return PlayerModel.withError(error);
+      _profileList.add(ProfileCharacterModel.withError(error));
+      return _profileList;
     }
 
   }
   
-  Future<CharacterModel> fetchCharacters(String mType, String mId) async {
-    Fimber.i("fetchCharacters called");
-    
-    final response = await client
-        .get("https://www.bungie.net/Platform/Destiny2/" + mType +
-              "/Profile/" + mId + "/?components=100,200",
-          headers: _headers
-        );
-
-    print(response.body.toString());
-    if (response.statusCode == 200) {
-      return CharacterModel.fromJson(json.decode(response.body));
-    } else {
-      throw Exception('Failed to get characters');
-    }
-  }
+//  Future<CharacterModel> fetchCharacters(String mType, String mId) async {
+//    Fimber.i("fetchCharacters called");
+//
+//    final response = await client
+//        .get("https://www.bungie.net/Platform/Destiny2/" + mType +
+//              "/Profile/" + mId + "/?components=100,200",
+//          headers: _headers
+//        );
+//
+//    print(response.body.toString());
+//    if (response.statusCode == 200) {
+//      return CharacterModel.fromJson(json.decode(response.body));
+//    } else {
+//      throw Exception('Failed to get characters');
+//    }
+//  }
 
 
 }

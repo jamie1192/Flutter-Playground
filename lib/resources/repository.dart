@@ -1,4 +1,6 @@
 import 'dart:async';
+import 'package:flutter_playground/models/character_model.dart';
+
 import '../models/player_model.dart';
 import '../resources/BungieApiProvider.dart';
 
@@ -7,6 +9,6 @@ class Repository {
 
   Future<PlayerModel> fetchPlayer() => bungieApiProvider.fetchPlayer();
 
-  Future<PlayerModel> searchPlayerByName(String player) => bungieApiProvider.searchPlayerByName(player);
+  Future<List<ProfileCharacterModel>> searchPlayerByName(String player) => bungieApiProvider.searchPlayerByName(player);
 
 }

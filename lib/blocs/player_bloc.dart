@@ -1,3 +1,4 @@
+import 'package:flutter_playground/models/character_model.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:flutter_playground/models/player_model.dart';
 import 'package:flutter_playground/resources/repository.dart';
@@ -7,10 +8,10 @@ class PlayerBloc {
   final _repository = Repository();
   final _playerFetcher = PublishSubject<PlayerModel>();
 
-  final _searchResult = PublishSubject<PlayerModel>();
+  final _searchResult = PublishSubject<List<ProfileCharacterModel>>();
 
   Observable<PlayerModel> get playerSearch => _playerFetcher.stream;
-  Observable<PlayerModel> get getSearchResult => _searchResult.stream;
+  Observable<List<ProfileCharacterModel>> get getSearchResult => _searchResult.stream;
 
   fetchPlayer() async {
     PlayerModel playerModel = await _repository.fetchPlayer();
@@ -18,7 +19,7 @@ class PlayerBloc {
   }
 
   findPlayer(String player) async {
-    PlayerModel model = await _repository.searchPlayerByName(player);
+    List<ProfileCharacterModel> model = await _repository.searchPlayerByName(player);
     _searchResult.sink.add(model);
   }
 
