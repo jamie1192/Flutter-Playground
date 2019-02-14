@@ -2,7 +2,7 @@ import 'package:fimber/fimber.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_playground/blocs/player_bloc.dart';
 import 'package:flutter_playground/models/character_model.dart';
-import 'package:flutter_playground/models/player_model.dart';
+import 'package:flutter_svg/svg.dart';
 
 class PlayerSearch extends StatelessWidget {
 
@@ -156,7 +156,7 @@ Widget buildList(AsyncSnapshot<List<ProfileCharacterModel>> snapshot) {
     padding: EdgeInsets.all(10.0),
     itemBuilder: (BuildContext context, int index) {
       String _icon;
-      switch(snapshot.data[index].profile.data.userInfo.membershipType) {
+      switch(snapshot.data[index].response.profile.data.userInfo.membershipType) {
         case 1:
           _icon = "assets/images/icon_xbl.png";
           break;
@@ -179,11 +179,14 @@ Widget buildList(AsyncSnapshot<List<ProfileCharacterModel>> snapshot) {
             children: <Widget>[
               ListTile(
                 title: Text(
-                  snapshot.data[index].profile.data.userInfo.displayName,
-                  style: TextStyle(fontSize: 18.0),
+                  snapshot.data[index].response.profile.data.userInfo.displayName,
+                  style: TextStyle(
+                      fontSize: 18.0,
+                      fontFamily: 'Destiny-Font'
+                  ),
                 ),
                 subtitle: Text(
-                  'mId: ${snapshot.data[index].profile.data.userInfo.membershipId}',
+                  'mId: ${snapshot.data[index].response.profile.data.userInfo.membershipId}',
                   style: TextStyle(
                       fontSize: 14.0,
                       fontStyle: FontStyle.italic,
@@ -195,12 +198,91 @@ Widget buildList(AsyncSnapshot<List<ProfileCharacterModel>> snapshot) {
                   height: 30.0,
                   width: 30.0,
                 ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children:
+                    characterListBuilder(snapshot.data[index].response.characters),
+                ),
               )
-              //TODO add characters for player account
             ],
           ),
         ),
       );
     },
   );
+}
+
+List<Widget> characterListBuilder(List<CharacterData> charList) {
+
+    List<Column> columnList = [];
+
+    for(CharacterData character in charList) {
+      columnList.add(
+        new Column(
+          children: <Widget>[
+            getClassIcon(character.classType),
+            Padding(
+              padding: const EdgeInsets.only(top: 5.0),
+              child: Text(
+                character.light.toString(),
+                style: TextStyle(
+                  color: Colors.amberAccent,
+                  fontSize: 20.0,
+                  fontWeight: FontWeight.bold,
+                  fontFamily: 'Destiny-Font'
+                ),
+              ),
+            )
+          ],
+        )
+      );
+    }
+    return charList.isEmpty ? buildError('No Characters Found') : columnList;
+}
+
+Widget getClassIcon(int classType) {
+  switch(classType) {
+    case 0:
+      return SvgPicture.asset(
+        'assets/images/icon_titan.svg',
+        color: Color.fromARGB(255, 42, 46, 135),
+        height: 30.0,
+      );
+    case 1:
+      return SvgPicture.asset(
+        'assets/images/icon_hunter.svg',
+        color: Color.fromARGB(255, 233, 139, 26),
+        height: 30.0,
+      );
+    case 2:
+      return SvgPicture.asset(
+        'assets/images/icon_warlock.svg',
+        color: Color.fromARGB(255, 155, 70, 158),
+        height: 30.0,
+      );
+    default:
+      return SvgPicture.asset(
+        'assets/images/icon_destiny.svg',
+        color: Colors.black,
+        height: 30.0,
+      );
+  }
+
+}
+
+String getClassName(int classType) {
+  switch(classType) {
+    case 0:
+      return 'Titan';
+    case 1:
+      return 'Hunter';
+    case 2:
+      return 'Warlock';
+    default:
+      return 'Unknown';
+  }
+
 }

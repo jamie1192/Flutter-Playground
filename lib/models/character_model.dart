@@ -159,7 +159,15 @@ class CharacterData {
   String minutesPlayedThisSession;
   String minutesPlayedTotal;
   int light;
-//  Map<String, int> stats;
+  int raceHash;
+  int genderHash;
+  int classHash;
+  int raceType;
+  int classType;
+  int genderType;
+  String emblemPath;
+  String emblemBackgroundPath;
+  int emblemHash;
 
   CharacterData({
     this.membershipId,
@@ -169,7 +177,15 @@ class CharacterData {
     this.minutesPlayedThisSession,
     this.minutesPlayedTotal,
     this.light,
-//    this.stats,
+    this.raceHash,
+    this.genderHash,
+    this.classHash,
+    this.raceType,
+    this.classType,
+    this.genderType,
+    this.emblemPath,
+    this.emblemBackgroundPath,
+    this.emblemHash,
   });
 
   factory CharacterData.fromJson(Map<String, dynamic> json) => new CharacterData(
@@ -180,6 +196,15 @@ class CharacterData {
     minutesPlayedThisSession: json["minutesPlayedThisSession"],
     minutesPlayedTotal: json["minutesPlayedTotal"],
     light: json["light"],
+    raceHash: json["raceHash"],
+    genderHash: json["genderHash"],
+    classHash: json["classHash"],
+    raceType: json["raceType"],
+    classType: json["classType"],
+    genderType: json["genderType"],
+    emblemPath: json["emblemPath"],
+    emblemBackgroundPath: json["emblemBackgroundPath"],
+    emblemHash: json["emblemHash"],
 //    stats: new Map.from(json["stats"]).map((k, v) => new MapEntry<String, int>(k, v)),
   );
 
@@ -191,6 +216,15 @@ class CharacterData {
     "minutesPlayedThisSession": minutesPlayedThisSession,
     "minutesPlayedTotal": minutesPlayedTotal,
     "light": light,
+    "raceHash": raceHash,
+    "genderHash": genderHash,
+    "classHash": classHash,
+    "raceType": raceType,
+    "classType": classType,
+    "genderType": genderType,
+    "emblemPath": emblemPath,
+    "emblemBackgroundPath": emblemBackgroundPath,
+    "emblemHash": emblemHash,
 //    "stats": new Map.from(stats).map((k, v) => new MapEntry<String, dynamic>(k, v)),
   };
 }

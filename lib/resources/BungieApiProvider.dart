@@ -44,6 +44,8 @@ class BungieApiProvider {
         if (onValue.statusCode == 200) { //success
           PlayerModel temp = PlayerModel.fromJson(json.decode(onValue.body));
 
+          Fimber.e(onValue.body.toString());
+
           if(temp.memberships.isEmpty) {
             return ProfileCharacterModel.withError('No Players Found!');
           } else{
@@ -51,16 +53,20 @@ class BungieApiProvider {
               "${temp.memberships[0].mType}/Profile/${temp.memberships[0].mId}/?components=100,200",
                 headers: _headers);
 
+                Fimber.e(getCharacters.body.toString());
             //TODO: handle Bungie errorCode?
-            if(getCharacters.statusCode == 200) {
+            var jsonBody = jsonDecode(getCharacters.body);
+            if(getCharacters.statusCode == 200 && jsonBody['ErrorCode'] == 1) {
               Fimber.i('getCharacters');
               ProfileCharacterModel model = ProfileCharacterModel.fromJson(json.decode(getCharacters.body));
              _profileList.add(model);
              return _profileList;
             } else {
-              return ProfileCharacterModel.withError('Error');
+              return ProfileCharacterModel.withError('No Characters Found!');
             }
           }
+        } else {
+          return ProfileCharacterModel.withError('No Characters Found!');
         }
       });
       return _profileList;

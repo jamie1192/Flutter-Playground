@@ -29,31 +29,15 @@ class HomeScreen extends StatelessWidget {
               padding: const EdgeInsets.all(8.0),
               child: Text('Networking'),
             ),
-            ExpansionTile(
+            ListTile(
+              title: Text('Destiny API Search'),
               leading: Icon(
-                Icons.gamepad
+                  MdiIcons.gamepad
               ),
-              title: Text('Destiny API'),
-              children: <Widget>[
-                ListTile(
-                  title: Text('Destiny Player Search'),
-                  leading: Icon(
-                      MdiIcons.accountSearch
-                  ),
-                  onTap: () {
-                    Navigator.of(context).pop();
-                    Navigator.pushNamed(context, 'playerSearch');
-                  },
-                ),
-                ListTile(
-                  title: Text('Destiny Character List'),
-                  leading: Icon(MdiIcons.accountGroup),
-                  onTap: () {
-                    Navigator.of(context).pop();
-                    Navigator.pushNamed(context, 'characterSearch');
-                  },
-                )
-              ],
+              onTap: () {
+                Navigator.of(context).pop();
+                Navigator.pushNamed(context, 'playerSearch');
+              },
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
@@ -86,6 +70,10 @@ class HomeScreen extends StatelessWidget {
                     }
                 )
               ],
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text('Storage'),
             ),
             ListTile(
                 title: Text('Database'),

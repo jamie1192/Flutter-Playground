@@ -25,6 +25,8 @@ dependencies:
   sqflite: ^1.1.0
   path_provider: any
   material_design_icons_flutter: 3.0.3392
+  cached_network_image: 0.5.1
+  flutter_svg: 0.10.3
 
 
 dev_dependencies:
@@ -41,6 +43,9 @@ flutter:
     - family: Children-One
       fonts:
         - asset: assets/fonts/children_one.otf
+    - family: Destiny-Font
+      fonts:
+        - asset: assets/fonts/NeueHaasGroteskRegular.ttf
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
