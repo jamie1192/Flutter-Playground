@@ -33,7 +33,7 @@ class BungieApiProvider {
     String uri = Uri.encodeComponent(player);
     Fimber.i('Searching for player: $uri');
 
-    List<ProfileCharacterModel> _profileList;
+    List<ProfileCharacterModel> _profileList = [];
     
     try {
       final response = await client
@@ -45,7 +45,7 @@ class BungieApiProvider {
           PlayerModel temp = PlayerModel.fromJson(json.decode(onValue.body));
 
           if(temp.memberships.isEmpty) {
-            return PlayerModel.withError('No Players Found!');
+            return ProfileCharacterModel.withError('No Players Found!');
           } else{
             final getCharacters = await client.get("https://www.bungie.net/Platform/Destiny2/"
               "${temp.memberships[0].mType}/Profile/${temp.memberships[0].mId}/?components=100,200",
@@ -54,12 +54,16 @@ class BungieApiProvider {
             //TODO: handle Bungie errorCode?
             if(getCharacters.statusCode == 200) {
               Fimber.i('getCharacters');
-             _profileList.add(ProfileCharacterModel.fromJson(json.decode(getCharacters.body)));
+              ProfileCharacterModel model = ProfileCharacterModel.fromJson(json.decode(getCharacters.body));
+             _profileList.add(model);
+             return _profileList;
+            } else {
+              return ProfileCharacterModel.withError('Error');
             }
           }
         }
       });
-
+      return _profileList;
 
 //      Fimber.i(response.body.toString());
 //      if (response.statusCode == 200) { //success
