@@ -2,11 +2,11 @@ import 'dart:convert';
 
 Word wordFromJson(String str) {
   final jsonData = json.decode(str);
-  return Word.fromJson(jsonData);
+  return Word.fromMap(jsonData);
 }
 
 String wordToJson(Word data) {
-  final dyn = data.toJson();
+  final dyn = data.toMap();
   return json.encode(dyn);
 }
 
@@ -19,12 +19,12 @@ class Word {
     this.word,
   });
 
-  factory Word.fromJson(Map<String, dynamic> json) => new Word(
+  factory Word.fromMap(Map<String, dynamic> json) => new Word(
     id: json["id"],
     word: json["word"],
   );
 
-  Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toMap() => {
     "id": id,
     "word": word,
   };

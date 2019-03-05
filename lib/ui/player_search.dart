@@ -1,5 +1,6 @@
 import 'package:fimber/fimber.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_playground/blocs/bloc_provider.dart';
 import 'package:flutter_playground/blocs/player_bloc.dart';
 import 'package:flutter_playground/models/character_model.dart';
 import 'package:flutter_svg/svg.dart';
@@ -14,42 +15,28 @@ class PlayerSearch extends StatelessWidget {
         title: Text('Player Search'),
         backgroundColor: Color.fromARGB(255, 24, 29, 37),
       ),
-      body: Container(
-        height: double.infinity,
-        width: double.infinity,
-        child: Align(
-          alignment: Alignment.topCenter,
-          child: Column(
-            children: <Widget>[
-              PlayerSearchForm(),
-              StreamBuilder(
-                  stream: bloc.getSearchResult,
-                  builder: (context, AsyncSnapshot<List<ProfileCharacterModel>> snapshot) {
-                    if(snapshot.hasData) {
-                      for(ProfileCharacterModel profile in snapshot.data) {
-                        if(profile.error != null) {
-                          return buildError(profile.error);
-                        }
-                        else {
-                          return buildList(snapshot);
-                        }
-                      }
-
-                    }
-                    else if(snapshot.hasError) {
-                      return buildError(snapshot.error.toString());
-                    }
-                    return Center();
-                  }
-              ),
-            ],
+      body: BlocProvider<PlayerBloc>(
+        bloc: PlayerBloc(),
+        child: Container(
+          height: double.infinity,
+          width: double.infinity,
+          child: Align(
+            alignment: Alignment.topCenter,
+            child: Column(
+              children: <Widget>[
+                PlayerSearchForm(),
+                StreamListBuilder(),
+              ],
+            )
           )
-        )
       )
+    )
     );
   }
 
 }
+
+
 
 class PlayerSearchForm extends StatefulWidget {
   @override
@@ -57,6 +44,43 @@ class PlayerSearchForm extends StatefulWidget {
     return PlayerSearchFormState();
   }
 
+}
+
+class StreamListBuilder extends StatefulWidget {
+  final Widget child;
+
+  StreamListBuilder({Key key, this.child}) : super(key: key);
+
+  _StreamListBuilderState createState() => _StreamListBuilderState();
+}
+
+class _StreamListBuilderState extends State<StreamListBuilder> {
+  @override
+  Widget build(BuildContext context) {
+
+    final PlayerBloc playerBloc = BlocProvider.of<PlayerBloc>(context);
+
+    return StreamBuilder(
+      stream: playerBloc.getSearchResult,
+      builder: (context, AsyncSnapshot<List<ProfileCharacterModel>> snapshot) {
+        if(snapshot.hasData) {
+          for(ProfileCharacterModel profile in snapshot.data) {
+            if(profile.error != null) {
+              return buildError(profile.error);
+            }
+            else {
+              return buildList(snapshot);
+            }
+          }
+
+        }
+        else if(snapshot.hasError) {
+          return buildError(snapshot.error.toString());
+        }
+        return Center();
+      }
+  );
+  }
 }
 
 class PlayerSearchFormState extends State<PlayerSearchForm> {
@@ -67,6 +91,7 @@ class PlayerSearchFormState extends State<PlayerSearchForm> {
   @override
   Widget build(BuildContext context) {
 
+    final PlayerBloc playerBloc = BlocProvider.of<PlayerBloc>(context);
     String _searchText;
 
       return Padding(
@@ -85,7 +110,7 @@ class PlayerSearchFormState extends State<PlayerSearchForm> {
               onFieldSubmitted: (term) {
                 if(_formPlayerName.currentState.validate()) {
                   Fimber.i('Done, Validating: $_formPlayerName');
-                  bloc.findPlayer(_searchText);
+                  playerBloc.findPlayer(_searchText);
                 }
               },
               validator: (value) {
@@ -102,7 +127,7 @@ class PlayerSearchFormState extends State<PlayerSearchForm> {
               onPressed: () {
                 if(_formPlayerName.currentState.validate()) {
                   Fimber.i('Validating: $_formPlayerName');
-                  bloc.findPlayer(_searchText);
+                  playerBloc.findPlayer(_searchText);
                 }
               },
               child: Text('Search',
@@ -115,14 +140,6 @@ class PlayerSearchFormState extends State<PlayerSearchForm> {
         ),
       );
   }
-
-  @override
-  void dispose() {
-    super.dispose();
-    bloc.dispose();
-    Fimber.i('player_search disposed');
-  }
-
 }
 
 Widget buildError(String errorMessage) {

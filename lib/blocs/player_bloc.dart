@@ -1,9 +1,10 @@
+import 'package:flutter_playground/blocs/bloc_provider.dart';
 import 'package:flutter_playground/models/character_model.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:flutter_playground/models/player_model.dart';
 import 'package:flutter_playground/resources/repository.dart';
 
-class PlayerBloc {
+class PlayerBloc extends BlocBase {
 
   final _repository = Repository();
   final _playerFetcher = PublishSubject<PlayerModel>();
@@ -25,9 +26,7 @@ class PlayerBloc {
 
   dispose() {
     _playerFetcher.close();
-//    _searchResult.close();
+   _searchResult.close();
   }
 
 }
-
-final bloc = PlayerBloc();

@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'dart:async';
 
+import 'package:fimber/fimber.dart';
 import 'package:flutter_playground/models/word.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
@@ -25,6 +26,8 @@ class DBProvider {
   initDB() async {
     Directory docDirectory = await getApplicationDocumentsDirectory();
     String path = join(docDirectory.path, "appDatabase.db");
+    Fimber.i('initDB called');
+    
     return await openDatabase(path, version: 1, onOpen: (db) {},
         onCreate: (Database db, int version) async {
           await db.execute("CREATE TABLE $TABLE_NAME ("
@@ -44,7 +47,7 @@ class DBProvider {
     //insert with new id
     var raw = await db.rawInsert(
       "INSERT INTO $TABLE_NAME (id, word)"
-          " VALUES (?,?,)",
+          " VALUES (?,?)",
       [id, newWord.word]);
 
     return raw;
@@ -52,9 +55,28 @@ class DBProvider {
 
   updateWord(Word newWord) async {
     final db = await database;
-    var res = await db.update("$TABLE_NAME", newWord.toJson(),
+    var res = await db.update("$TABLE_NAME", newWord.toMap(),
       where: "id = ?", whereArgs: [newWord.id]);
     return res;
+  }
+
+  deleteWord(int id) async {
+    final db = await database;
+    return db.delete("$TABLE_NAME", where: "id = ?", whereArgs: [id]);
+  }
+
+  deleteAll() async {
+    final db = await database;
+    db.rawDelete("DELETE * FROM $TABLE_NAME");
+  }
+
+  Future<List<Word>> getAllWords() async {
+    final db = await database;
+    var res = await db.query("$TABLE_NAME");
+    List<Word> list =
+    res.isNotEmpty ? res.map((w) => Word.fromMap(w)).toList() : [];
+
+    return list;
   }
 
 }
