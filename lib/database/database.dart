@@ -53,6 +53,7 @@ class DBProvider {
     return raw;
   }
 
+
   updateWord(Word newWord) async {
     final db = await database;
     var res = await db.update("$TABLE_NAME", newWord.toMap(),

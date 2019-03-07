@@ -12,6 +12,7 @@ class CrudScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text('Storage'),
         backgroundColor: Colors.pinkAccent,
+        
       ),
       body: BlocProvider<WordBloc>(
           bloc: WordBloc(),
@@ -58,7 +59,7 @@ class _NewWordState extends State<NewWord> {
           title: TextFormField(
             decoration: InputDecoration(
               labelText: 'Insert a word...',
-              border:OutlineInputBorder()
+              border: OutlineInputBorder()
             ),
             maxLines: 1,
             maxLength: 30,
@@ -78,6 +79,20 @@ class _NewWordState extends State<NewWord> {
                 _inputText = newWord;
               }
             },
+          ),
+          trailing: RaisedButton(
+            color: Colors.pink,
+            onPressed: () {
+              if(_formNewWord.currentState.validate()) {
+                wordBloc.addWord(_inputText);
+                wordBloc.getWords();
+              }
+            },
+            child: Text('Insert',
+              style: TextStyle(
+                color: Colors.white
+              ),
+            ),
           ),
         ),
       ),
@@ -115,9 +130,12 @@ class _DatabaseListState extends State<DatabaseList> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: <Widget>[
-                        Icon(
-                          Icons.delete,
-                          // color: Colors.white,
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Icon(
+                            Icons.delete,
+                            color: Colors.white,
+                          ),
                         )
                       ],
                     ),
@@ -127,9 +145,11 @@ class _DatabaseListState extends State<DatabaseList> {
                       wordBloc.delete(word.id);
                     }
                   },
-                  child: ListTile(
-                    title: Text(word.word),
-                    leading: Text(word.id.toString()),
+                  child: Card(
+                    child: ListTile(
+                      title: Text(word.word),
+                      leading: Text(word.id.toString()),
+                    ),
                   ),
                 );
               },

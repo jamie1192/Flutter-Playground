@@ -68,8 +68,18 @@ class HomeScreen extends StatelessWidget {
                       Navigator.of(context).pop();
                       Navigator.pushNamed(context, 'pinchGesture');
                     }
-                )
+                ),
               ],
+            ),
+            ListTile(
+              title: Text('Questionnaire'),
+              leading: Icon(
+                Icons.question_answer
+              ),
+              onTap: () {
+                Navigator.of(context).pop();
+                Navigator.pushNamed(context, 'questionnaire');
+              },
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
