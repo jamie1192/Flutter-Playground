@@ -114,53 +114,54 @@ class _DatabaseListState extends State<DatabaseList> {
   Widget build(BuildContext context) {
     final WordBloc wordBloc = BlocProvider.of<WordBloc>(context);
 
-    return StreamBuilder<List<Word>>(
-        stream: wordBloc.words,
-        builder: (BuildContext context, AsyncSnapshot<List<Word>> snapshot) {
-          if(snapshot.hasData) {
-            return ListView.builder(
-              shrinkWrap: true,
-              itemCount: snapshot.data.length,
-              itemBuilder: (BuildContext context, int index) {
-                Word word = snapshot.data[index];
-                return Dismissible(
-                  key: UniqueKey(),
-                  background: Container(
-                    color: Colors.red,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: <Widget>[
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Icon(
-                            Icons.delete,
-                            color: Colors.white,
-                          ),
-                        )
-                      ],
+    return Expanded(
+      child: StreamBuilder<List<Word>>(
+          stream: wordBloc.words,
+          builder: (BuildContext context, AsyncSnapshot<List<Word>> snapshot) {
+            if(snapshot.hasData) {
+              return ListView.builder(
+                itemCount: snapshot.data.length,
+                itemBuilder: (BuildContext context, int index) {
+                  Word word = snapshot.data[index];
+                  return Dismissible(
+                    key: UniqueKey(),
+                    background: Container(
+                      color: Colors.red,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: <Widget>[
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Icon(
+                              Icons.delete,
+                              color: Colors.white,
+                            ),
+                          )
+                        ],
+                      ),
                     ),
-                  ),
-                  onDismissed: (direction) {
-                    if(direction == DismissDirection.endToStart) {
-                      wordBloc.delete(word.id);
-                    }
-                  },
-                  child: Card(
-                    child: ListTile(
-                      title: Text(word.word),
-                      leading: Text(word.id.toString()),
+                    onDismissed: (direction) {
+                      if(direction == DismissDirection.endToStart) {
+                        wordBloc.delete(word.id);
+                      }
+                    },
+                    child: Card(
+                      child: ListTile(
+                        title: Text(word.word),
+                        leading: Text(word.id.toString()),
+                      ),
                     ),
-                  ),
-                );
-              },
-            );
-          }
-          else {
-            return Center(
-              child:CircularProgressIndicator()
-            );
-          }
-        },
-      );
+                  );
+                },
+              );
+            }
+            else {
+              return Center(
+                child:CircularProgressIndicator()
+              );
+            }
+          },
+        ),
+    );
   }
 }

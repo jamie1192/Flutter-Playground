@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_playground/ui/app_theme.dart';
+import 'package:flutter_playground/ui/card_swipe.dart';
 import 'package:flutter_playground/ui/character_search.dart';
 import 'package:flutter_playground/ui/crud_screen.dart';
 import 'package:flutter_playground/ui/home_screen.dart';
+import 'package:flutter_playground/ui/notifications.dart';
 import 'package:flutter_playground/ui/pinch_gesture.dart';
 import 'package:flutter_playground/ui/player_search.dart';
 import 'package:flutter_playground/ui/questionnaire.dart';
@@ -21,7 +23,9 @@ class App extends StatelessWidget {
         'spinnerWheel': (context) => SpinnerWheel(),
         'pinchGesture': (context) => PinchGesture(),
         'crudScreen': (context) => CrudScreen(),
-        'questionnaire': (context) => Questionnaire()
+        'questionnaire': (context) => Questionnaire(),
+        'notifications': (context) => Notifications(),
+        'cardSwipe': (context) => CardSwipe()
       },
       home: HomeScreen(title: 'Flutter Playground'),
     );

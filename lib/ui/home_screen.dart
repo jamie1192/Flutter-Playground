@@ -69,6 +69,14 @@ class HomeScreen extends StatelessWidget {
                       Navigator.pushNamed(context, 'pinchGesture');
                     }
                 ),
+                ListTile(
+                  title: Text('Card Swiping'),
+                  leading: Icon(MdiIcons.cards),
+                  onTap: () {
+                    Navigator.of(context).pop();
+                    Navigator.pushNamed(context, 'cardSwipe');
+                  },
+                )
               ],
             ),
             ListTile(
@@ -83,18 +91,31 @@ class HomeScreen extends StatelessWidget {
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Text('Storage'),
+              child: Text('Utils'),
             ),
             ListTile(
-                title: Text('Database'),
-                leading: Icon(
-                    MdiIcons.database
-                ),
-                onTap: () {
-                  Navigator.of(context).pop();
-                  Navigator.pushNamed(context, 'crudScreen');
-                }
-            )
+              title: Text('Database'),
+              leading: Icon(
+                  MdiIcons.database
+              ),
+              onTap: () {
+                Navigator.of(context).pop();
+                Navigator.pushNamed(context, 'crudScreen');
+              }
+            ),
+            ListTile(
+              title: Text('Notifications'),
+              leading: Icon(
+                  Icons.notifications_active
+              ),
+              onTap: () {
+                Navigator.of(context).pop();
+                Navigator.pushNamed(context, 'notifications');
+              }
+            ),
+            //   ],
+            // ),
+            
           ],
         ),
       ),
