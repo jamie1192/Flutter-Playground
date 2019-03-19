@@ -46,24 +46,23 @@ class CardModel {
               ),
               
               new Container(
-                  width: screenSize.width / 1.2 + cardWidth,
-                  height: screenSize.height / 1.7 -
-                      screenSize.height / 2.2,
-                
-                  child: new Row(
-                    mainAxisAlignment:
-                        MainAxisAlignment.spaceEvenly,
-                    children: <Widget>[
-                      FlatButton(
-                        child: Text("NUH"),
-                        onPressed: swipeLeft,
-                      ),
-                      FlatButton(
-                        child: Text("YUH"),
-                        onPressed: swipeRight,
-                      ),
-                    ],
-                  ))
+                width: screenSize.width / 1.2 + cardWidth,
+                height: screenSize.height / 1.7 - screenSize.height / 2.2,
+              
+                child: new Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget>[
+                    FlatButton(
+                      child: Text("NUH"),
+                      onPressed: swipeLeft,
+                    ),
+                    FlatButton(
+                      child: Text("YUH"),
+                      onPressed: swipeRight,
+                    ),
+                  ],
+                )
+              )
             ],
           ),
         ),

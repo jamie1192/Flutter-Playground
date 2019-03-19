@@ -167,16 +167,16 @@ class _ButtonContainerState extends State<ButtonContainer> {
       0,
       'show daily title',
       'Daily notification shown at approximately ${_toTwoDigitString(time.hour)}:${_toTwoDigitString(time.minute)}:${_toTwoDigitString(time.second)}',
-            time,
-            platformChannelSpecifics
-          );
-        }
+      time,
+      platformChannelSpecifics
+    );
+  }
       
-        cancelAllPending() async {
-          await flutterLocalNotificationsPlugin.cancelAll();
-        }
-      
-        _toTwoDigitString(int minute) => minute.toString();
+  cancelAllPending() async {
+    await flutterLocalNotificationsPlugin.cancelAll();
+  }
+
+  _toTwoDigitString(int minute) => minute.toString();
         
 }
 
