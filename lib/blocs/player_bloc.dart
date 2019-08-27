@@ -2,11 +2,11 @@ import 'package:flutter_playground/blocs/bloc_provider.dart';
 import 'package:flutter_playground/models/character_model.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:flutter_playground/models/player_model.dart';
-import 'package:flutter_playground/resources/repository.dart';
+import 'package:flutter_playground/resources/profile_repository.dart';
 
 class PlayerBloc extends BlocBase {
 
-  final _repository = BungieRepository();
+  final _repository = ProfileRepository();
   final _playerFetcher = PublishSubject<PlayerModel>();
 
   final _searchResult = PublishSubject<List<ProfileCharacterModel>>();

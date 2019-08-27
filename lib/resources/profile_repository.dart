@@ -1,16 +1,16 @@
 import 'dart:async';
-import 'package:flutter_playground/database/bungie_cache.dart';
+import 'package:flutter_playground/database/profile_cache.dart';
 
 import '../models/player_model.dart';
 import '../resources/BungieApiProvider.dart';
 
 // https://felangel.github.io/bloc/#/flutterangulargithubsearch?id=github-repository
 
-class BungieRepository {
+class ProfileRepository {
   final BungieApiProvider apiProvider;
-  final DestinyPlayerCache cache;
+  final ProfileCache cache;
 
-  BungieRepository({this.apiProvider, this.cache});
+  ProfileRepository({this.apiProvider, this.cache});
 
 
   Future<PlayerModel> fetchDestinyPlayer(int mId, String displayName) async {
@@ -18,7 +18,7 @@ class BungieRepository {
       //check cache result age?
       return cache.get(displayName);
     } else {
-      
+      return PlayerModel();
     }
   }
 

@@ -1,6 +1,6 @@
 import 'package:flutter_playground/models/player_model.dart';
 
-class DestinyPlayerCache {
+class ProfileCache {
   //TODO
 
   final _cache = <String, PlayerModel>{};

@@ -46,7 +46,7 @@ class BungieApiProvider {
 
           Fimber.e(onValue.body.toString());
 
-          if(temp.memberships.isEmpty) {
+          if(temp.memberships.isEmpty) {œ
             return ProfileCharacterModel.withError('No Players Found!');
           } else{
             final getCharacters = await client.get("https://www.bungie.net/Platform/Destiny2/"
