@@ -6,7 +6,7 @@ import 'package:flutter_playground/resources/repository.dart';
 
 class PlayerBloc extends BlocBase {
 
-  final _repository = Repository();
+  final _repository = BungieRepository();
   final _playerFetcher = PublishSubject<PlayerModel>();
 
   final _searchResult = PublishSubject<List<ProfileCharacterModel>>();
